@@ -54,3 +54,13 @@ create table VatTu_phieuXuat(
     foreign key(soPX) references phieuxuat(soPX),
     foreign key(maVatTu) references vattu(maVatTu)
 );
+create table sodienthoai(
+	maSDT int,
+    sDT varchar(11),
+    maNCC int,
+    primary key(maSDT),
+    foreign key(maNCC) references nhaCC(maNCC)
+);
+use quanlydonhang;
+ALTER TABLE nhacc
+  DROP COLUMN sdt;
