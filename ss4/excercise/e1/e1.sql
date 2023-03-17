@@ -2,8 +2,8 @@ use quanlysinhvien;
 
 -- Hiển thị tất cả các thông tin môn học (bảng subject) có credit lớn nhất.
 select * from `subject`
-order by credit desc
-limit 1;
+group by  subID
+having credit = (select max(credit) from `subject`);
 
 -- Hiển thị các thông tin môn học có điểm thi lớn nhất.
 select sub.*,mark,studentID
