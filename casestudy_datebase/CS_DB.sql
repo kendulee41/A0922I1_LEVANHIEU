@@ -148,3 +148,31 @@ where not exists(select * from hop_dong
 
 -- 17.	Cập nhật thông tin những khách hàng có ten_loai_khach từ Platinum lên Diamond,
 --  chỉ cập nhật những khách hàng đã từng đặt phòng với Tổng Tiền thanh toán trong năm 2021 là lớn hơn 10.000.000 VNĐ.
+
+-- cau18
+delete from khach_hang kh
+where not exists (
+select *from hop_dong 
+where ma_khach_hang=kh.ma_khach_hang and year(ngay_lam_hop_dong)>=2021);
+
+-- cau19
+update dich_vu_di_kem
+set gia=gia*2
+where ma_dich_vu_di_kem in(
+select tmp.ma_dich_vu_di_kem
+from (
+select ma_dich_vu_di_kem
+from (
+select ma_dich_vu_di_kem, sum(so_luong) t
+from dich_vu join hop_dong using(ma_dich_vu) join hop_dong using (ma_hop_dong)
+group by ma_dich_vu_di_kem
+having t>10)
+	)tmp
+);
+
+-- cau20
+select ma_nhan_vien as id, ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi
+from nhan_vien
+union all
+select ma_khach_hang as id, ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi
+from khach_hang
